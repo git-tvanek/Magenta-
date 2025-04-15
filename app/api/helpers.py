@@ -25,7 +25,7 @@ def get_api():
     
     if _api_instance is None:
         # Import here to avoid circular import
-        from app.services.magenta_tv import MagentaTV
+        from app.services import get_magenta_tv_service
         
         # Check credentials
         if not current_app.config.get("USERNAME") or not current_app.config.get("PASSWORD"):
@@ -33,13 +33,13 @@ def get_api():
             return None
             
         # Create new instance
-        _api_instance = MagentaTV(
-            username=current_app.config["USERNAME"],
-            password=current_app.config["PASSWORD"],
-            language=current_app.config["LANGUAGE"],
-            quality=current_app.config["QUALITY"]
-        )
+        _api_instance = get_magenta_tv_service()
         
+        # Check if service was created
+        if _api_instance is None:
+            logger.error("Failed to create MagentaTV service!")
+            return None
+            
         # Login
         if not _api_instance.login():
             logger.error("Failed to login to API!")
