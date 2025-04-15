@@ -467,3 +467,298 @@ class MagentaTV:
         except Exception as e:
             logger.error(f"Chyba při získání EPG: {e}")
             return None
+    
+    def get_catchup_url(self, schedule_id):
+        """
+        Získání URL pro přehrávání archivu podle ID pořadu
+        
+        Args:
+            schedule_id (int): ID pořadu v programu
+            
+        Returns:
+            dict: Informace o streamu včetně URL nebo None v případě chyby
+        """
+        if not self.refresh_access_token():
+            return None
+            
+        params = {
+            "service": "ARCHIVE",
+            "name": self.device_name,
+            "devtype": self.device_type,
+            "id": int(schedule_id),
+            "prof": self.quality,
+            "ecid": "",
+            "drm": "widevine"
+        }
+        
+        headers = {
+            "Authorization": f"Bearer {self.access_token}",
+            "Host": f"{self.language}go.magio.tv",
+            "User-Agent": self.user_agent,
+            "Accept": "*/*",
+            "Referer": f"https://{self.language}go.magio.tv/"
+        }
+        
+        try:
+            response = self.session.get(
+                f"{self.base_url}/v2/television/stream-url",
+                params=params,
+                headers=headers,
+                timeout=10
+            ).json()
+            
+            if not response.get("success", False):
+                error_msg = response.get('errorMessage', 'Neznámá chyba')
+                logger.error(f"Chyba při získání catchup URL: {error_msg}")
+                return None
+                
+            url = response["url"]
+            
+            # Následování přesměrování pro získání skutečné URL
+            headers_redirect = {
+                "Host": urlparse(url).netloc,
+                "User-Agent": self.user_agent,
+                "Authorization": f"Bearer {self.access_token}",
+                "Accept": "*/*",
+                "Referer": f"https://{self.language}go.magio.tv/"
+            }
+            
+            redirect_response = self.session.get(
+                url,
+                headers=headers_redirect,
+                allow_redirects=False,
+                timeout=10
+            )
+            
+            final_url = redirect_response.headers.get("location", url)
+            
+            # Vrátíme informace o streamu
+            return {
+                "url": final_url,
+                "headers": dict(headers_redirect),
+                "content_type": redirect_response.headers.get("Content-Type", "application/vnd.apple.mpegurl"),
+                "is_live": False
+            }
+            
+        except Exception as e:
+            logger.error(f"Chyba při získání catchup URL: {e}")
+            return None
+
+    def get_catchup_by_time(self, channel_id, start_timestamp, end_timestamp):
+        """
+        Získání URL pro přehrávání archivu podle času začátku a konce
+        
+        Args:
+            channel_id (int): ID kanálu
+            start_timestamp (int): Čas začátku v Unix timestamp
+            end_timestamp (int): Čas konce v Unix timestamp
+            
+        Returns:
+            dict: Informace o streamu včetně URL nebo None v případě chyby
+        """
+        if not self.refresh_access_token():
+            return None
+            
+        # Převod timestampů na datetime objekty
+        start_time = datetime.fromtimestamp(start_timestamp)
+        end_time = datetime.fromtimestamp(end_timestamp)
+        
+        # Formátování pro API
+        start_time_str = start_time.strftime("%Y-%m-%dT%H:%M:%S")
+        end_time_str = end_time.strftime("%Y-%m-%dT%H:%M:%S")
+        
+        # Získání ID pořadu z EPG
+        headers = {
+            "Authorization": f"Bearer {self.access_token}",
+            "Host": f"{self.language}go.magio.tv",
+            "User-Agent": self.user_agent
+        }
+        
+        filter_str = f"channel.id=={channel_id} and startTime=ge={start_time_str}.000Z and endTime=le={end_time_str}.000Z"
+        params = {
+            "filter": filter_str,
+            "limit": 10,
+            "offset": 0,
+            "lang": self.language.upper()
+        }
+        
+        try:
+            epg_response = self.session.get(
+                f"{self.base_url}/v2/television/epg",
+                params=params,
+                headers=headers,
+                timeout=30
+            ).json()
+            
+            if not epg_response.get("success", True) or not epg_response.get("items"):
+                logger.error(f"Chyba při hledání pořadu v EPG: {epg_response.get('errorMessage', 'Pořad nebyl nalezen')}")
+                return None
+                
+            # Hledání pořadu, který odpovídá časovému rozsahu
+            schedule_id = None
+            for item in epg_response.get("items", []):
+                for program in item.get("programs", []):
+                    prog_start = program["startTimeUTC"] / 1000
+                    prog_end = program["endTimeUTC"] / 1000
+                    
+                    if prog_start <= end_timestamp and prog_end >= start_timestamp:
+                        schedule_id = program["scheduleId"]
+                        break
+                
+                if schedule_id:
+                    break
+            
+            if not schedule_id:
+                logger.error("Pořad nebyl nalezen v EPG")
+                return None
+            
+            # Získání URL streamu
+            return self.get_catchup_url(schedule_id)
+            
+        except Exception as e:
+            logger.error(f"Chyba při získání catchup podle času: {e}")
+            return None
+
+    def get_devices(self):
+        """
+        Získání seznamu registrovaných zařízení
+        
+        Returns:
+            list: Seznam zařízení s jejich ID a názvy
+        """
+        if not self.refresh_access_token():
+            return []
+            
+        headers = {
+            "Authorization": f"Bearer {self.access_token}",
+            "Host": f"{self.language}go.magio.tv",
+            "User-Agent": self.user_agent
+        }
+        
+        try:
+            response = self.session.get(
+                f"{self.base_url}/v2/home/my-devices",
+                headers=headers,
+                timeout=30
+            ).json()
+            
+            devices = []
+            
+            # Aktuální zařízení
+            if "thisDevice" in response:
+                devices.append({
+                    "id": response["thisDevice"]["id"],
+                    "name": response["thisDevice"]["name"],
+                    "type": "current",
+                    "is_this_device": True
+                })
+            
+            # Mobilní zařízení
+            for device in response.get("smallScreenDevices", []):
+                devices.append({
+                    "id": device["id"],
+                    "name": device["name"],
+                    "type": "mobile",
+                    "is_this_device": False
+                })
+            
+            # STB a TV zařízení
+            for device in response.get("stbAndBigScreenDevices", []):
+                devices.append({
+                    "id": device["id"],
+                    "name": device["name"],
+                    "type": "stb",
+                    "is_this_device": False
+                })
+                
+            return devices
+            
+        except Exception as e:
+            logger.error(f"Chyba při získání seznamu zařízení: {e}")
+            return []
+
+    def delete_device(self, device_id):
+        """
+        Odstranění zařízení podle ID
+        
+        Args:
+            device_id (str): ID zařízení
+            
+        Returns:
+            bool: True v případě úspěšného odstranění, jinak False
+        """
+        if not self.refresh_access_token():
+            return False
+            
+        headers = {
+            "Authorization": f"Bearer {self.access_token}",
+            "Host": f"{self.language}go.magio.tv",
+            "User-Agent": self.user_agent
+        }
+        
+        try:
+            response = self.session.get(
+                f"{self.base_url}/home/deleteDevice",
+                params={"id": device_id},
+                headers=headers,
+                timeout=30
+            ).json()
+            
+            if response.get("success", False):
+                logger.info(f"Zařízení s ID {device_id} bylo úspěšně odstraněno")
+                return True
+            else:
+                logger.error(f"Chyba při odstraňování zařízení: {response.get('errorMessage', 'Neznámá chyba')}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Chyba při odstraňování zařízení: {e}")
+            return False
+
+    def generate_m3u_playlist(self, server_url=""):
+        """
+        Vygenerování M3U playlistu pro použití v IPTV přehrávačích
+        
+        Args:
+            server_url (str): URL serveru pro přesměrování
+            
+        Returns:
+            str: Obsah M3U playlistu
+        """
+        channels = self.get_channels()
+        if not channels:
+            return ""
+            
+        playlist = "#EXTM3U\n"
+        
+        for channel in channels:
+            channel_id = channel["id"]
+            name = channel["name"].replace(" HD", "")
+            group = channel["group"]
+            logo = channel["logo"]
+            has_archive = channel["has_archive"]
+            
+            # Zápis informací o kanálu
+            playlist += f'#EXTINF:-1 tvg-id="{channel_id}" tvg-name="{name}" group-title="{group}"'
+            
+            # Přidání informací o archivu, pokud je dostupný
+            if has_archive and server_url:
+                playlist += f' catchup="default" catchup-source="{server_url}/api/catchup/{channel_id}/' + '${start}-${end}' + '" catchup-days="7"'
+            
+            # Přidání loga, pokud je dostupné
+            if logo:
+                playlist += f' tvg-logo="{logo}"'
+                
+            playlist += f',{name}\n'
+            
+            # URL pro streamování
+            if server_url:
+                playlist += f'{server_url}/api/stream/{channel_id}?redirect=1\n'
+            else:
+                stream_info = self.get_stream_url(channel_id)
+                if stream_info:
+                    playlist += f'{stream_info["url"]}\n'
+                else:
+                    playlist += f'http://127.0.0.1/error.m3u8\n'
+                
+        return playlist
