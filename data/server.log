@@ -42,3 +42,109 @@
 2025-04-15 12:28:56,652 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
 2025-04-15 12:28:56,663 - werkzeug - WARNING -  * Debugger is active!
 2025-04-15 12:28:56,665 - werkzeug - INFO -  * Debugger PIN: 919-107-404
+2025-04-15 17:04:48,286 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:04:48,303 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.68.56:5000
+2025-04-15 17:04:48,303 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-15 17:04:48,304 - werkzeug - INFO -  * Restarting with stat
+2025-04-15 17:04:48,682 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:04:48,692 - werkzeug - WARNING -  * Debugger is active!
+2025-04-15 17:04:48,694 - werkzeug - INFO -  * Debugger PIN: 919-107-404
+2025-04-15 17:04:55,032 - MagentaTV - INFO - Tokeny naèteny ze souboru
+2025-04-15 17:04:55,032 - MagentaTV - INFO - Souèasný token je stále platný
+2025-04-15 17:04:55,032 - MagentaTV - INFO - API úspìšnì inicializováno
+2025-04-15 17:04:55,033 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 17:04:55] "GET / HTTP/1.1" 200 -
+2025-04-15 17:05:01,930 - MagentaTV - INFO - API úspìšnì inicializováno
+2025-04-15 17:05:01,932 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): czgo.magio.tv:443
+2025-04-15 17:05:02,006 - urllib3.connectionpool - DEBUG - https://czgo.magio.tv:443 "GET /home/categories?language=cz HTTP/1.1" 401 265
+2025-04-15 17:05:02,024 - urllib3.connectionpool - DEBUG - https://czgo.magio.tv:443 "GET /v2/television/channels?list=LIVE&queryScope=LIVE HTTP/1.1" 401 265
+2025-04-15 17:05:02,024 - MagentaTV - ERROR - Chyba pøi získání kanálù
+2025-04-15 17:05:02,024 - MagentaTV - DEBUG - Data uložena do cache: channels
+2025-04-15 17:05:02,024 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 17:05:02] "[35m[1mGET /api/channels HTTP/1.1[0m" 500 -
+2025-04-15 17:05:11,678 - MagentaTV - INFO - API úspìšnì inicializováno
+2025-04-15 17:05:11,696 - urllib3.connectionpool - DEBUG - https://czgo.magio.tv:443 "GET /v2/home/my-devices HTTP/1.1" 401 265
+2025-04-15 17:05:11,697 - MagentaTV - DEBUG - Data uložena do cache: devices
+2025-04-15 17:05:11,697 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 17:05:11] "GET /api/devices HTTP/1.1" 200 -
+2025-04-15 17:05:53,116 - MagentaTV - INFO - API úspìšnì inicializováno
+2025-04-15 17:05:53,117 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 17:05:53] "[33mGET /api/ HTTP/1.1[0m" 404 -
+2025-04-15 17:05:54,177 - MagentaTV - INFO - API úspìšnì inicializováno
+2025-04-15 17:05:54,178 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 17:05:54] "[33mGET /api/ HTTP/1.1[0m" 404 -
+2025-04-15 17:05:54,552 - MagentaTV - INFO - API úspìšnì inicializováno
+2025-04-15 17:05:54,552 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 17:05:54] "[33mGET /api/ HTTP/1.1[0m" 404 -
+2025-04-15 17:06:00,361 - MagentaTV - INFO - API úspìšnì inicializováno
+2025-04-15 17:06:00,361 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 17:06:00] "GET /api/config HTTP/1.1" 200 -
+2025-04-15 17:06:08,475 - MagentaTV - INFO - API úspìšnì inicializováno
+2025-04-15 17:06:08,475 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 17:06:08] "[33mGET /api/ HTTP/1.1[0m" 404 -
+2025-04-15 17:06:11,906 - MagentaTV - INFO - API úspìšnì inicializováno
+2025-04-15 17:06:11,906 - MagentaTV - DEBUG - Data získána z cache: devices
+2025-04-15 17:06:11,906 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 17:06:11] "GET /api/devices HTTP/1.1" 200 -
+2025-04-15 17:06:45,065 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:06:45,082 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.68.56:5000
+2025-04-15 17:06:45,082 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-15 17:06:45,083 - werkzeug - INFO -  * Restarting with stat
+2025-04-15 17:06:45,472 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:06:45,481 - werkzeug - WARNING -  * Debugger is active!
+2025-04-15 17:06:45,485 - werkzeug - INFO -  * Debugger PIN: 919-107-404
+2025-04-15 17:07:12,435 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): czgo.magio.tv:443
+2025-04-15 17:07:12,531 - urllib3.connectionpool - DEBUG - https://czgo.magio.tv:443 "POST /v2/auth/init?dsid=26d09a57-1aa8-4e12-83c2-71621c52e81e&deviceName=Web+Client&deviceType=OTT_WIN&osVersion=0.0.0&appVersion=4.0.21-hf.0&language=CZ&devicePlatform=GO HTTP/1.1" 200 None
+2025-04-15 17:07:12,566 - urllib3.connectionpool - DEBUG - https://czgo.magio.tv:443 "POST /v2/auth/login HTTP/1.1" 401 337
+2025-04-15 17:07:12,567 - MagentaTV - ERROR - Chyba pøihlášení: Nesprávné heslo nebo uživatelské jméno.
+
+2025-04-15 17:07:12,567 - MagentaTV - ERROR - Nepodaøilo se pøihlásit k API!
+2025-04-15 17:07:12,567 - MagentaTV - WARNING - API nebylo inicializováno!
+2025-04-15 17:07:12,567 - werkzeug - INFO - 127.0.0.1 - - [15/Apr/2025 17:07:12] "GET / HTTP/1.1" 200 -
+2025-04-15 17:08:31,795 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:08:31,811 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.68.56:5000
+2025-04-15 17:08:31,811 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-15 17:08:31,812 - werkzeug - INFO -  * Restarting with stat
+2025-04-15 17:08:32,186 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:08:32,195 - werkzeug - WARNING -  * Debugger is active!
+2025-04-15 17:08:32,198 - werkzeug - INFO -  * Debugger PIN: 919-107-404
+2025-04-15 17:09:47,183 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:09:47,200 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.68.56:5000
+2025-04-15 17:09:47,200 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-15 17:09:47,201 - werkzeug - INFO -  * Restarting with stat
+2025-04-15 17:09:47,249 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:09:47,264 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.68.56:5000
+2025-04-15 17:09:47,264 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-04-15 17:09:47,265 - werkzeug - INFO -  * Restarting with stat
+2025-04-15 17:09:47,583 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:09:47,593 - werkzeug - WARNING -  * Debugger is active!
+2025-04-15 17:09:47,596 - werkzeug - INFO -  * Debugger PIN: 919-107-404
+2025-04-15 17:09:47,645 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:09:47,654 - werkzeug - WARNING -  * Debugger is active!
+2025-04-15 17:09:47,656 - werkzeug - INFO -  * Debugger PIN: 919-107-404
+2025-04-15 17:19:47,746 - werkzeug - INFO -  * Detected change in 'd:\\Projects\\Magenta+\\app\\services\\magenta_tv.py', reloading
+2025-04-15 17:19:47,772 - werkzeug - INFO -  * Restarting with stat
+2025-04-15 17:19:48,156 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 17:19:48,166 - werkzeug - WARNING -  * Debugger is active!
+2025-04-15 17:19:48,168 - werkzeug - INFO -  * Debugger PIN: 919-107-404
+2025-04-15 18:12:03,320 - werkzeug - INFO -  * Detected change in 'd:\\Projects\\Magenta+\\app\\services\\magenta_tv.py', reloading
+2025-04-15 18:12:03,345 - werkzeug - INFO -  * Restarting with stat
+2025-04-15 18:12:03,791 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 18:12:03,801 - werkzeug - WARNING -  * Debugger is active!
+2025-04-15 18:12:03,804 - werkzeug - INFO -  * Debugger PIN: 919-107-404
+2025-04-15 18:50:29,407 - werkzeug - INFO -  * Detected change in 'd:\\Projects\\Magenta+\\app\\services\\magenta_tv.py', reloading
+2025-04-15 18:50:29,432 - werkzeug - INFO -  * Restarting with stat
+2025-04-15 18:50:29,796 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 18:50:29,806 - werkzeug - WARNING -  * Debugger is active!
+2025-04-15 18:50:29,808 - werkzeug - INFO -  * Debugger PIN: 919-107-404
+2025-04-15 18:51:22,545 - werkzeug - INFO -  * Detected change in 'd:\\Projects\\Magenta+\\app\\config.py', reloading
+2025-04-15 18:51:22,569 - werkzeug - INFO -  * Restarting with stat
+2025-04-15 18:51:22,945 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
+2025-04-15 18:51:22,954 - werkzeug - WARNING -  * Debugger is active!
+2025-04-15 18:51:22,957 - werkzeug - INFO -  * Debugger PIN: 919-107-404

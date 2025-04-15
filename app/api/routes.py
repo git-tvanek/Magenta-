@@ -108,7 +108,8 @@ def channels():
     if api is None:
         return jsonify({"success": False, "message": "API is not initialized"}), 500
         
-    channels_data = get_from_cache("channels", api.get_channels)
+    #channels_data = get_from_cache("channels", api.get_channels)
+    channels_data = api.get_channels()
     
     if not channels_data:
         return jsonify({"success": False, "message": "Failed to get channels list"}), 500
@@ -228,7 +229,8 @@ def devices():
         return jsonify({"success": False, "message": "API is not initialized"}), 500
     
     # Get devices list
-    devices_data = get_from_cache("devices", api.get_devices)
+    #devices_data = get_from_cache("devices", api.get_devices)
+    devices_data = api.get_devices()
     
     if devices_data is None:
         return jsonify({"success": False, "message": "Failed to get devices list"}), 500

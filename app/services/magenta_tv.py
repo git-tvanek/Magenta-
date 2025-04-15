@@ -45,8 +45,8 @@ class MagentaTV:
         
         # Informace o zařízení
         self.device_id = str(uuid.uuid4())
-        self.device_name = "Web Client"
-        self.device_type = "OTT_WIN"
+        self.device_name = "Android TV"
+        self.device_type = "OTT_STB"
         
         # Tokeny
         self.access_token = None
@@ -98,14 +98,15 @@ class MagentaTV:
         if self.refresh_token and self.token_expires > time.time() + 60:
             logger.info("Současný token je stále platný")
             return self.refresh_access_token()
-            
+        
+        app_version = current_app.config.get("APP_VERSION", "4.0.25-hf.0")
         # Parametry pro inicializaci přihlášení
         params = {
             "dsid": self.device_id,
             "deviceName": self.device_name,
             "deviceType": self.device_type,
             "osVersion": "0.0.0",
-            "appVersion": "4.0.21-hf.0",
+            "appVersion": app_version,
             "language": self.language.upper(),
             "devicePlatform": "GO"
         }

@@ -13,6 +13,7 @@ DEFAULT_CONFIG = {
     "PASSWORD": "",                # Heslo
     "LANGUAGE": "cz",              # Jazyk ("cz" nebo "sk")
     "QUALITY": "p5",               # Kvalita streamu (p1-p5, kde p5 je nejvyšší)
+    "APP_VERSION": "4.0.25-hf.0",             
     "HOST": "0.0.0.0",             # Adresa, na které bude server poslouchat
     "PORT": 5000,                  # Port serveru
     "CACHE_TIMEOUT": 3600,         # Platnost cache v sekundách (1 hodina)

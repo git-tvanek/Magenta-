@@ -3,6 +3,7 @@
     "password": "YOUR_PASSWORD",
     "language": "cz",
     "quality": "p5",
+    "appversion": "4.0.25-hf.0",
     "host": "0.0.0.0",
     "port": 5000,
     "cache_timeout": 3600,
