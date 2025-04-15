@@ -45,7 +45,7 @@ class MagentaTV:
         
         # Informace o zařízení
         self.device_id = str(uuid.uuid4())
-        self.device_name = "Android TV"
+        self.device_name = "ANDROID-STB"
         self.device_type = "OTT_STB"
         
         # Tokeny
@@ -313,10 +313,10 @@ class MagentaTV:
             "id": int(channel_id),
             "prof": self.quality,
             "ecid": "",
-            "drm": "widevine",
+            "drm": "verimatrix",
             "start": "LIVE",
             "end": "END",
-            "device": "OTT_PC_HD_1080p_v2"
+            "device": "OTT_STB"
         }
         
         headers = {
