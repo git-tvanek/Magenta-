@@ -1,0 +1,11 @@
+{
+    "username": "TV136561894",
+    "password": "Yw1b0T9",
+    "language": "cz",
+    "quality": "p5",
+    "host": "0.0.0.0",
+    "port": 5000,
+    "cache_timeout": 3600,
+    "data_dir": "data",
+    "debug": false
+}
