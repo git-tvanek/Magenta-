@@ -6,7 +6,7 @@ MagentaTV Backend Server
 Server zajišťující komunikaci s API služby Magenta TV / Magio TV.
 Poskytuje REST API endpointy pro získání seznamu kanálů, streamů a EPG.
 """
-from app import create_app
+from app.services import create_app
 import os
 
 # Create the Flask application instance

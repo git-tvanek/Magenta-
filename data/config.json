@@ -7,5 +7,5 @@
     "port": 5000,
     "cache_timeout": 3600,
     "data_dir": "data",
-    "debug": false
+    "debug": true
 }

@@ -7,6 +7,7 @@ from flask import (
     request, jsonify, Response, redirect, 
     current_app, url_for, send_file
 )
+from datetime import timedelta
 import os
 import json
 import io
@@ -52,20 +53,25 @@ def config_endpoint():
         data = request.get_json()
         if not data:
             return jsonify({"success": False, "message": "Invalid data format"}), 400
-            
-        # Update configuration
+
         config = update_config(data)
         
         # Reset API instance
         get_api.cache_clear()
-        
+
         return jsonify({"success": True, "config": config})
+    
     else:
-        # Get configuration
+        # Safe serialization for config
+        config = {
+            k.lower(): str(v) if isinstance(v, timedelta) else v
+            for k, v in current_app.config.items()
+            if k != 'PASSWORD'
+        }
+
         return jsonify({
             "success": True, 
-            "config": {k.lower(): v for k, v in current_app.config.items() 
-                      if k in current_app.config and k != 'PASSWORD'}
+            "config": config
         })
 
 
@@ -76,10 +82,13 @@ def status():
     api = get_api()
     if api is None:
         return jsonify({"success": False, "message": "API is not initialized"}), 500
-    
-    config = {k.lower(): v for k, v in current_app.config.items() 
-              if k not in ('PASSWORD', 'SECRET_KEY')}
-    
+
+    config = {
+        k.lower(): str(v) if isinstance(v, timedelta) else v
+        for k, v in current_app.config.items()
+        if k not in ('PASSWORD', 'SECRET_KEY')
+    }
+
     return jsonify({
         "success": True,
         "status": "online",

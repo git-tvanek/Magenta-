@@ -3,6 +3,7 @@
 """
 Helper functions for API endpoints
 """
+
 import functools
 import logging
 from flask import current_app, request
@@ -26,6 +27,7 @@ def get_api():
     if _api_instance is None:
         # Import here to avoid circular import
         from app.services import get_magenta_tv_service
+
         
         # Check credentials
         if not current_app.config.get("USERNAME") or not current_app.config.get("PASSWORD"):

@@ -6,6 +6,7 @@ Services module initialization
 This module provides service classes that handle the core business logic of the application.
 """
 from flask import Flask, current_app
+from app.services.magenta_tv import MagentaTV
 import logging
 import os
 
