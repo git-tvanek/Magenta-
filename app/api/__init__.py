@@ -1,18 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Models module initialization
-
-This module contains data models used throughout the application.
-These models represent the core data structures and help maintain
-consistency across the application.
+API module initialization
 """
+from flask import Blueprint
 
-# Import all models
-from app.models.channel import Channel
-from app.models.stream import Stream
-from app.models.program import Program
-from app.models.device import Device
+# Create blueprint
+api_bp = Blueprint('api', __name__, url_prefix='/api')
 
-# Export all models
-__all__ = ['Channel', 'Stream', 'Program', 'Device']
+# Import routes
+from app.api import routes
