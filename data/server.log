@@ -148,3 +148,5 @@
 2025-04-15 18:51:22,945 - MagentaTV - INFO - Spouštìní serveru na 0.0.0.0:5000
 2025-04-15 18:51:22,954 - werkzeug - WARNING -  * Debugger is active!
 2025-04-15 18:51:22,957 - werkzeug - INFO -  * Debugger PIN: 919-107-404
+2025-04-15 19:17:46,636 - werkzeug - INFO -  * Detected change in 'd:\\Projects\\Magenta+\\app\\services\\magenta_tv.py', reloading
+2025-04-15 19:17:46,666 - werkzeug - INFO -  * Restarting with stat
